@@ -21,5 +21,6 @@ return {
         translate_problems = true, ---@type boolean
       }, -- configuration goes here
     },
+    cmd = "Leet",
   },
 }
