@@ -28,7 +28,7 @@ return {
         desc = "Float terminal",
       },
       {
-        "<c-l>",
+        "<c-p>",
         toggle_float_terminal,
         mode = { "n", "t", "i", "v" },
         desc = "Float terminal",
