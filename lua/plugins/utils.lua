@@ -55,4 +55,39 @@ return {
     "lukas-reineke/indent-blankline.nvim",
     enabled = false,
   },
+  {
+    "echasnovski/mini.pairs",
+    enabled = false,
+  },
+  {
+    "windwp/nvim-autopairs",
+    event = "InsertEnter",
+    config = true,
+    -- use opts = {} for passing setup options
+    -- this is equalent to setup({}) function
+  },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      indent = {
+        enable = false, -- 启用后会导致slint的缩进错误
+      },
+      ensure_installed = {
+        "bash",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "query",
+        "regex",
+        "tsx",
+        "typescript",
+        "vim",
+        "yaml",
+      },
+    },
+  },
 }
