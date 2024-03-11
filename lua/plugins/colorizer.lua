@@ -1,6 +1,6 @@
 return {
   {
     "norcalli/nvim-colorizer.lua",
-    config = true,
+    config = function() end,
   },
 }
