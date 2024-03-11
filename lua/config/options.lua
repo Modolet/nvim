@@ -9,6 +9,7 @@ opt.expandtab = true
 opt.softtabstop = 4
 opt.shiftwidth = 4
 opt.swapfile = false
+opt.spell = false
 
 if vim.g.neovide then
   vim.o.guifont = "CaskaydiaCove Nerd Font Mono:h14" -- text below applies for VimScript
