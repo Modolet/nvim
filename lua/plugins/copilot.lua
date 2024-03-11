@@ -10,7 +10,7 @@ return {
         auto_trigger = true,
       },
       filetypes = {
-        slint = false,
+        -- slint = false,
       },
       -- suggestion = { enabled = false },
       -- panel = { enabled = false },
