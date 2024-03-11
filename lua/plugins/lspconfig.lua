@@ -9,6 +9,9 @@ return {
       servers = {
         slint_lsp = {},
       },
+      inlay_hints = {
+        enabled = true,
+      },
       setup = {
         slint_lsp = function(_, opts)
           opts.capabilities = { offsetEncoding = { "utf-8", "utf-16" } }
