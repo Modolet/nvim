@@ -1,7 +1,6 @@
 local function toggle_lazygit()
   _G.lazygit:toggle()
 end
-
 local function toggle_ranger()
   _G.ranger:toggle()
 end
@@ -20,6 +19,13 @@ end
 return {
   {
     "akinsho/toggleterm.nvim",
+    init = function()
+      if vim.fn.has("win32") ~= 0 and vim.fn.executable("nu") ~= 0 then
+        _G.cmd = "nu"
+      else
+        _G.cmd = nil
+      end
+    end,
     keys = {
       {
         "<leader>tt",
@@ -49,8 +55,9 @@ return {
         desc = "horziontal terminal",
       },
       {
-        "<leader>tv",
+        "<c-/>",
         toggle_vertical_terminal,
+        mode = { "n", "t", "i", "v" },
         desc = "vertical terminal",
       },
     },
@@ -67,14 +74,17 @@ return {
         direction = "float",
       })
       _G.horizonal_terminal = require("toggleterm.terminal").Terminal:new({
+        cmd = _G.cmd,
         hidden = true,
         direction = "horizontal",
       })
       _G.vertical_terminal = require("toggleterm.terminal").Terminal:new({
+        cmd = _G.cmd,
         hidden = true,
         direction = "vertical",
       })
       _G.float_terminal = require("toggleterm.terminal").Terminal:new({
+        cmd = _G.cmd,
         hidden = true,
         direction = "float",
       })
