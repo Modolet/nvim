@@ -3,6 +3,10 @@ local M = {}
 M.dark_color_scheme = "catppuccin-frappe"
 M.light_color_scheme = "catppuccin-latte"
 
+local function trim(s)
+  return (s:gsub("^[%s\r\n]*(.-)[%s\r\n]*$", "%1"))
+end
+
 local function file_exists(path)
   local f = io.open(path, "r")
   if f then
@@ -12,10 +16,6 @@ local function file_exists(path)
 end
 
 local function set_neovide_bg()
-  if (not vim.g.neovide) and (not os.getenv("KITTY_WINDOW_ID")) then
-    return
-  end
-
   local xdg_config = vim.env.XDG_CONFIG_HOME or vim.env.HOME .. "/.config"
   local kitty_theme_conf_path = xdg_config .. "/kitty/themes/theme.conf"
   if not file_exists(kitty_theme_conf_path) then
@@ -39,46 +39,48 @@ local function set_neovide_bg()
 end
 
 M.set_color_scheme_from_system = function()
-  local handle = io.popen("gsettings get org.gnome.desktop.interface color-scheme")
+  local handle = io.popen("gsettings get org.gnome.desktop.interface gtk-theme")
   if not handle then
     return
   end
 
   local result = handle:read("*a")
   handle:close()
-  local target_colors_name = vim.g.colors_name
-  local dark = vim.g.dark
+  result = trim(result)
 
-  if result:match("dark") then
-    target_colors_name = M.dark_color_scheme
-    dark = true
-  elseif result:match("light") or result:match("default") then
-    target_colors_name = M.light_color_scheme
-    dark = false
+  if result ~= vim.g.last_theme then
+    vim.g.last_theme = result
   else
-    target_colors_name = M.dark_color_scheme
-    dark = true
+    vim.defer_fn(function()
+      M.set_color_scheme_from_system()
+    end, 1000)
+    return
   end
 
-  if dark == nil then
-    vim.cmd("colorscheme " .. M.dark_color_scheme)
-    set_neovide_bg()
-  end
+  local colorschemes = {
+    ["'Catppuccin-Mocha'"] = "catppuccin-mocha",
+    ["'Catppuccin-Latte'"] = "catppuccin-latte",
+    ["'Decay-Green'"] = "decay",
+    ["'Rose-Pine'"] = "rose-pine",
+    ["'Tokyo-Night'"] = "tokyonight-night",
+    ["'Material-Sakura'"] = "material-lighter",
+    ["'Graphite-Mono'"] = "kanagawa",
+    ["'Cyberpunk-Edge'"] = "silverhand",
+    ["'Frosted-Glass'"] = "tokyonight-day",
+    ["'Gruvbox-Retro'"] = "gruvbox",
+    ["'Synth-Wave'"] = "synthwave84",
+    ["'One-Dark'"] = "onedark",
+  }
 
-  if dark ~= vim.g.dark then
-    if vim.g.dark ~= nil then
-      vim.notify("Change colorscheme to " .. target_colors_name)
-    end
-    vim.g.dark = dark
-
-    vim.cmd("colorscheme " .. target_colors_name)
+  local scheme = colorschemes[result]
+  if scheme then
+    vim.cmd("colorscheme " .. scheme)
     set_neovide_bg()
   end
 
   vim.defer_fn(function()
     M.set_color_scheme_from_system()
-  end, 2000)
+  end, 1000)
 end
 
-set_neovide_bg()
 return M
