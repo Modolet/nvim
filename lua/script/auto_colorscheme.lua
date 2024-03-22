@@ -35,7 +35,7 @@ local function set_neovide_bg()
     end
   end
   vim.cmd("hi Normal guibg=" .. bg_color)
-  vim.cmd("hi Normal guifg=" .. fg_color)
+  -- vim.cmd("hi Normal guifg=" .. fg_color)
 end
 
 M.set_color_scheme_from_system = function()
