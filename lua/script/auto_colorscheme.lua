@@ -15,29 +15,6 @@ local function file_exists(path)
   return f ~= nil
 end
 
-local function set_neovide_bg()
-  local xdg_config = vim.env.XDG_CONFIG_HOME or vim.env.HOME .. "/.config"
-  local kitty_theme_conf_path = xdg_config .. "/kitty/themes/theme.conf"
-  if not file_exists(kitty_theme_conf_path) then
-    return
-  end
-  local file = io.open(kitty_theme_conf_path, "r")
-  if file == nil then
-    return
-  end
-  local bg_color = nil
-  local fg_color = nil
-  for line in file:lines() do
-    if line:match("^%s*background%s+") then
-      bg_color = line:match("#%x+")
-    elseif line:match("^%s*foreground%s+") then
-      fg_color = line:match("#%x+")
-    end
-  end
-  vim.cmd("hi Normal guibg=" .. bg_color)
-  -- vim.cmd("hi Normal guifg=" .. fg_color)
-end
-
 M.set_color_scheme_from_system = function()
   local handle = io.popen("gsettings get org.gnome.desktop.interface gtk-theme")
   if not handle then
@@ -61,10 +38,10 @@ M.set_color_scheme_from_system = function()
     ["'Catppuccin-Mocha'"] = "catppuccin-mocha",
     ["'Catppuccin-Latte'"] = "catppuccin-latte",
     ["'Decay-Green'"] = "decay",
-    ["'Rose-Pine'"] = "rose-pine",
+    ["'Rose-Pine'"] = "rose-pine-main",
     ["'Tokyo-Night'"] = "tokyonight-night",
     ["'Material-Sakura'"] = "material-lighter",
-    ["'Graphite-Mono'"] = "kanagawa",
+    ["'Graphite-Mono'"] = "material-darker",
     ["'Cyberpunk-Edge'"] = "silverhand",
     ["'Frosted-Glass'"] = "tokyonight-day",
     ["'Gruvbox-Retro'"] = "gruvbox",
@@ -75,7 +52,6 @@ M.set_color_scheme_from_system = function()
   local scheme = colorschemes[result]
   if scheme then
     vim.cmd("colorscheme " .. scheme)
-    set_neovide_bg()
   end
 
   vim.defer_fn(function()
