@@ -4,5 +4,7 @@
 vim.keymap.set("i", "jj", "<ESC>", { silent = true, noremap = true })
 vim.keymap.set("n", "H", "^", { noremap = true })
 vim.keymap.set("n", "L", "$", { noremap = true })
+vim.keymap.set("v", "H", "^", { noremap = true })
+vim.keymap.set("v", "L", "$", { noremap = true })
 vim.keymap.del("n", "<C-/>")
 vim.keymap.del("t", "<C-/>")
