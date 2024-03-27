@@ -1,4 +1,3 @@
-# 💤 LazyVim
+# 💤 ModoVim
 
-A starter template for [LazyVim](https://github.com/LazyVim/LazyVim).
-Refer to the [documentation](https://lazyvim.github.io/installation) to get started.
+基于[LazyVim](https://github.com/LazyVim/LazyVim)neovim配置
