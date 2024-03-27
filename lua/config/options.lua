@@ -15,6 +15,7 @@ if vim.g.neovide then
   vim.g.neovide_light_angle_degrees = 45
   vim.g.neovide_light_radius = 5
   vim.g.neovide_cursor_vfx_mode = "railgun"
+  vim.g.neovide_fullscreen = false
   if vim.fn.has("win32") then
     -- vim.g.neovide_transparency = 0.8
     -- vim.g.neovide_window_blurred = true

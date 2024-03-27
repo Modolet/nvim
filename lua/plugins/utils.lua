@@ -56,10 +56,6 @@ return {
     end,
   },
   {
-    "lukas-reineke/indent-blankline.nvim",
-    enabled = false,
-  },
-  {
     "echasnovski/mini.pairs",
     enabled = false,
   },
