@@ -11,6 +11,7 @@ return {
         html = {},
         cssls = {},
         volar = {},
+        tsserver = {},
       },
       inlay_hints = {
         enabled = true,
@@ -18,7 +19,7 @@ return {
       setup = {
 
         slint_lsp = function(_, opts)
-          opts.capabilities = { offsetEncoding = { "utf-8", "utf-16" } }
+          opts.capabilities.offsetEncoding = { "utf-8", "utf-16" }
           opts.root_dir = function(fname)
             if fname == nil then
               fname = vim.fn.expand("%:p")
@@ -30,10 +31,10 @@ return {
           end
         end,
         copilot = function(_, opts)
-          opts.capabilities = { offsetEncoding = { "utf-8", "utf-16" } }
+          opts.capabilities.offsetEncoding = { "utf-8", "utf-16" }
         end,
         clangd = function(_, opts)
-          opts.capabilities = { offsetEncoding = { "utf-8", "utf-16" } }
+          opts.capabilities.offsetEncoding = { "utf-8", "utf-16" }
         end,
         volar = function(_, opts)
           local util = require("lspconfig.util")
