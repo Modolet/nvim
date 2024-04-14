@@ -13,6 +13,10 @@ return {
             end,
           },
         },
+        file_ignore_patterns = {
+          "node_modules",
+          "target",
+        },
       },
     },
   },
