@@ -8,7 +8,7 @@ opt.swapfile = false
 opt.spell = false
 
 if vim.g.neovide then
-  vim.o.guifont = "CaskaydiaCove Nerd Font Mono:h14" -- text below applies for VimScript
+  vim.o.guifont = "FiraMono Nerd Font Mono:h12"
   vim.g.neovide_window_blurred = true
   vim.g.neovide_floating_shadow = true
   vim.g.neovide_floating_z_height = 10
@@ -16,8 +16,6 @@ if vim.g.neovide then
   vim.g.neovide_light_radius = 5
   vim.g.neovide_cursor_vfx_mode = "railgun"
   vim.g.neovide_fullscreen = false
-  if vim.fn.has("win32") then
-    -- vim.g.neovide_transparency = 0.8
-    -- vim.g.neovide_window_blurred = true
-  end
+  vim.g.snacks_animate = false
+else
 end

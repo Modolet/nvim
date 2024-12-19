@@ -11,7 +11,7 @@ return {
   { "navarasu/onedark.nvim" },
 
   { "catppuccin/nvim", name = "catppuccin", priority = 1000, opts = {
-    transparent_background = true,
+    transparent_background = false,
   } },
   { "rebelot/kanagawa.nvim", opts = { transparent = true } },
   {
