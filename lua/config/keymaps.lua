@@ -8,4 +8,5 @@ vim.keymap.set("v", "H", "^", { noremap = true })
 vim.keymap.set("v", "L", "$", { noremap = true })
 vim.keymap.set("n", "<c-a>", "ggVG", { noremap = true })
 
-vim.keymap.set("v", "<c-p>", [["0p]], { noremap = true })
+vim.keymap.set("n", "<c-v>", [["0p]], { noremap = true })
+vim.keymap.set("i", "<c-v>", [[<esc>"0pi]], { noremap = true })

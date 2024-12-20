@@ -16,6 +16,8 @@ return {
         file_ignore_patterns = {
           "node_modules",
           "target",
+          "build",
+          "config_default",
         },
       },
     },
