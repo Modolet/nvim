@@ -3,10 +3,6 @@ return {
     "lambdalisue/suda.vim",
   },
   {
-    "LhKipp/nvim-nu",
-    config = true,
-  },
-  {
     "smoka7/multicursors.nvim",
     event = "VeryLazy",
     dependencies = {
@@ -27,38 +23,6 @@ return {
     "HiPhish/rainbow-delimiters.nvim",
   },
   {
-    "shellRaining/hlchunk.nvim",
-    event = { "UIEnter" },
-    config = function()
-      require("hlchunk").setup({
-        chunk = {
-          notify = false,
-        },
-        blank = {
-          enable = false,
-        },
-        line_num = {
-          enable = false,
-          use_treesitter = true,
-        },
-        -- indent = {
-        --   chars = {
-        --     "│",
-        --   },
-        -- style = {
-        --   "#FF0000",
-        --   "#FF7F00",
-        --   "#FFFF00",
-        --   "#00FF00",
-        --   "#00FFFF",
-        --   "#0000FF",
-        --   "#8B00FF",
-        -- },
-        -- },
-      })
-    end,
-  },
-  {
     "echasnovski/mini.pairs",
     enabled = false,
   },
@@ -72,9 +36,9 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     opts = {
-      indent = {
-        enable = false, -- 启用后会导致slint的缩进错误
-      },
+      -- indent = {
+      -- enable = false, -- 启用后会导致slint的缩进错误
+      -- },
       ensure_installed = {
         "bash",
         "html",
