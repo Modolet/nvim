@@ -6,7 +6,13 @@ vim.keymap.set("n", "H", "^", { noremap = true })
 vim.keymap.set("n", "L", "$", { noremap = true })
 vim.keymap.set("v", "H", "^", { noremap = true })
 vim.keymap.set("v", "L", "$", { noremap = true })
-vim.keymap.set("n", "<c-a>", "ggVG", { noremap = true })
 
 vim.keymap.set("n", "<c-v>", [["0p]], { noremap = true })
 vim.keymap.set("i", "<c-v>", [[<esc>"0pi]], { noremap = true })
+
+vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
+vim.keymap.set({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
+vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
+
+-- Expand 'cc' into 'CodeCompanion' in the command line
+vim.cmd([[cab cc CodeCompanion]])
