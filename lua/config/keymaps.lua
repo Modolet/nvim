@@ -7,8 +7,10 @@ vim.keymap.set("n", "L", "$", { noremap = true })
 vim.keymap.set("v", "H", "^", { noremap = true })
 vim.keymap.set("v", "L", "$", { noremap = true })
 
-vim.keymap.set("n", "<c-v>", [["0p]], { noremap = true })
-vim.keymap.set("i", "<c-v>", [[<esc>"0pi]], { noremap = true })
+vim.keymap.set("n", "<leader>y", [["0y]], { noremap = true })
+vim.keymap.set("v", "<leader>y", [["0y]], { noremap = true })
+vim.keymap.set("n", "<leader>p", [["0p]], { noremap = true })
+vim.keymap.set("v", "<leader>p", [["0p]], { noremap = true })
 
 vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap = true, silent = true })
 vim.keymap.set({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
