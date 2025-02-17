@@ -34,7 +34,7 @@ return {
         desc = "Float terminal",
       },
       {
-        "<c-.>",
+        "<m-.>",
         toggle_float_terminal,
         mode = { "n", "t", "i", "v" },
         desc = "Float terminal",
@@ -55,7 +55,7 @@ return {
         desc = "horziontal terminal",
       },
       {
-        "<c-/>",
+        "<m-/>",
         toggle_vertical_terminal,
         mode = { "n", "t", "i", "v" },
         desc = "vertical terminal",
@@ -75,7 +75,7 @@ return {
       })
       _G.horizonal_terminal = require("toggleterm.terminal").Terminal:new({
         cmd = _G.cmd,
-        hidden = true,
+        himden = true,
         direction = "horizontal",
       })
       _G.vertical_terminal = require("toggleterm.terminal").Terminal:new({

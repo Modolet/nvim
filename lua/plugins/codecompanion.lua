@@ -43,7 +43,7 @@ return {
         },
       },
       inline = {
-        adapter = "siliconflow_deepseek_r1",
+        adapter = "openai_2233",
       },
     },
     adapters = {
