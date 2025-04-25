@@ -8,16 +8,18 @@ return {
   { "thedenisnikulin/vim-cyberpunk" },
   { "ellisonleao/gruvbox.nvim", priority = 1000, config = true, opts = ... },
   { "lunarvim/synthwave84.nvim" },
-  { "navarasu/onedark.nvim" },
+  { "navarasu/onedark.nvim", opts = {
+    transparent = true,
+  } },
 
   { "catppuccin/nvim", name = "catppuccin", priority = 1000, opts = {
-    transparent_background = false,
+    transparent_background = true,
   } },
   { "rebelot/kanagawa.nvim", opts = { transparent = true } },
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "onedark",
+      colorscheme = "tokyonight",
     },
   },
 }
