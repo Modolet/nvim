@@ -3,7 +3,7 @@
 -- Add any additional autocmds here
 
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "lua",
+  pattern = { "lua", "vue" },
   callback = function()
     local opt = vim.opt
     opt.tabstop = 2

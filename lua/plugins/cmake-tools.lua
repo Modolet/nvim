@@ -1,6 +1,5 @@
 return {
   "Civitasv/cmake-tools.nvim",
-  event = "VeryLazy",
   keys = {
     -- 主要构建命令
     { "<leader>mg", "<cmd>CMakeGenerate<cr>", desc = "CMake Generate" },
