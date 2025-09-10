@@ -3,66 +3,24 @@ return {
   dependencies = {
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
+    "ravitemer/codecompanion-history.nvim",
   },
   opts = {
+    opts = {
+      language = "Chinese,中文",
+    },
 
     strategies = {
       chat = {
-        adapter = "siliconflow_deepseek_r1",
-        agents = {
-          tools = {
-            opts = {
-              system_prompt = [[## 工具访问和执行指南
-
-### 概述
-您现在可以访问一些专门的工具，这些工具能够帮助您完成特定任务。这些工具仅在用户明确请求时可用。
-
-### 通用规则
-- **用户触发：** 仅当用户明确表示需要使用某个工具时（例如使用类似“运行命令”来调用 cmd_runner 的短语），才可以使用工具。
-- **严格遵守模式：** 在调用任何工具时，请遵循提供的 XML 模式。
-- **XML 格式：** 始终将您的响应包装在标记为 XML 的 Markdown 代码块中，并使用 `<tools></tools>` 标签。
-- **有效 XML：** 确保生成的 XML 是有效且格式良好的。
-- **多条命令：**
-  - 如果是同一类型的命令，请将它们组合在一个 `<tools></tools>` XML 块中，使用单独的 `<action></action>` 条目。
-  - 如果是不同工具的命令，请确保它们分别包裹在 `<tool></tool>` 标签内，并位于 `<tools></tools>` 块中。
-- **无副作用：** 工具调用不应改变您的核心任务或一般的对话结构。]],
-            },
-          },
-        },
+        adapter = "siliconflow",
       },
-      cmd = {
-        opts = {
-          system_prompt = [[您当前正在用户的机器上通过 Neovim 文本编辑器运行。您的核心任务是生成用户可以在 Neovim 中运行的命令行输入。请遵循以下规则：
-
-- 仅返回纯文本
-- 不要将您的响应包装在 Markdown 块或反引号中
-- 不要在响应中使用换行符或新行
-- 不要提供任何解释
-- 生成的命令必须有效，并且可以在 Neovim 中运行
-- 确保生成的命令与用户的请求相关]],
-        },
-      },
+      cmd = {},
       inline = {
-        adapter = "openai_2233",
+        adapter = "siliconflow",
       },
     },
     adapters = {
-      openai_2233 = function()
-        return require("codecompanion.adapters").extend("openai_compatible", {
-          env = {
-            url = "https://api.gptsapi.net", -- optional: default value is ollama url http://127.0.0.1:11434
-            api_key = "OPEN_2233_API_KEY", -- optional: if your endpoint is authenticated
-            chat_url = "/v1/chat/completions", -- optional: default value, override if different
-          },
-          schema = {
-            modol = {
-              default = "gpt-4o",
-            },
-          },
-          max_tokens = 999999,
-        })
-      end,
-      siliconflow_deepseek_r1 = function()
+      siliconflow = function()
         return require("codecompanion.adapters").extend("deepseek", {
           url = "https://api.siliconflow.cn/v1/chat/completions", -- optional: default value is ollama url http://127.0.0.1:11434
           env = {
@@ -86,46 +44,146 @@ return {
           max_tokens = 999999,
         })
       end,
-    },
-
-    opts = {
-      system_prompt = function(opts)
-        local language = "中文"
-        return string.format(
-          [[您是一名名为“CodeCompanion”的 AI 编程助手。您当前正在用户的机器上通过 Neovim 文本编辑器运行。
-
-您的核心任务包括：
-- 回答一般的编程问题。
-- 解释 Neovim 缓冲区中的代码是如何工作的。
-- 审查 Neovim 缓冲区中选定的代码。
-- 为选定的代码生成单元测试。
-- 提出解决选定代码问题的方案。
-- 为新的工作区搭建代码框架。
-- 查找与用户查询相关的代码。
-- 提出测试失败的解决方案。
-- 回答有关 Neovim 的问题。
-- 运行工具。
-
-您必须：
-- 仔细并完全按照用户的要求执行。
-- 保持回答简洁客观，尤其是在用户的上下文超出您的核心任务范围时。
-- 除非需要澄清，否则尽量减少额外的叙述。
-- 在回答中使用 Markdown 格式。
-- 在每个 Markdown 代码块的开头注明编程语言名称。
-- 避免在代码块中包含行号。
-- 避免将整个响应用三个反引号包裹。
-- 仅返回与任务直接相关的代码。可以省略不必要的代码。
-- 在您的响应中使用实际换行符；仅在需要表示“\n”时使用反斜杠和字母 n。
-- 所有非代码文本响应必须用指定的 %s 语言编写。
-
-在执行任务时：
-1. 按步骤思考，除非用户另有要求或任务非常简单，请用详细的伪代码描述您的计划。
-2. 在一个代码块中输出最终代码，确保仅包含相关代码。
-3. 在响应末尾提供一个简短的建议，以支持继续对话。
-4. 每次对话轮次仅提供一个完整的回复。]],
-          language
-        )
+      openrouter_qwen = function()
+        return require("codecompanion.adapters").extend("openai_compatible", {
+          env = {
+            url = "https://openrouter.ai/api",
+            api_key = "OPENROUTER_API_KEY",
+            chat_url = "/v1/chat/completions",
+          },
+          schema = {
+            model = {
+              default = "Qwen: Qwen3 Coder",
+            },
+          },
+        })
       end,
+    },
+    extensions = {
+      vectorcode = {
+        ---@type VectorCode.CodeCompanion.ExtensionOpts
+        opts = {
+          tool_group = {
+            -- this will register a tool group called `@vectorcode_toolbox` that contains all 3 tools
+            enabled = true,
+            -- a list of extra tools that you want to include in `@vectorcode_toolbox`.
+            -- if you use @vectorcode_vectorise, it'll be very handy to include
+            -- `file_search` here.
+            extras = {},
+            collapse = false, -- whether the individual tools should be shown in the chat
+          },
+          tool_opts = {
+            ---@type VectorCode.CodeCompanion.ToolOpts
+            ["*"] = {},
+            ---@type VectorCode.CodeCompanion.LsToolOpts
+            ls = {},
+            ---@type VectorCode.CodeCompanion.VectoriseToolOpts
+            vectorise = {},
+            ---@type VectorCode.CodeCompanion.QueryToolOpts
+            query = {
+              max_num = { chunk = -1, document = -1 },
+              default_num = { chunk = 50, document = 10 },
+              include_stderr = false,
+              use_lsp = false,
+              no_duplicate = true,
+              chunk_mode = false,
+              ---@type VectorCode.CodeCompanion.SummariseOpts
+              summarise = {
+                ---@type boolean|(fun(chat: CodeCompanion.Chat, results: VectorCode.QueryResult[]):boolean)|nil
+                enabled = false,
+                adapter = nil,
+                query_augmented = true,
+              },
+            },
+            files_ls = {},
+            files_rm = {},
+          },
+        },
+      },
+      history = {
+        enabled = true,
+        opts = {
+          -- Keymap to open history from chat buffer (default: gh)
+          keymap = "gh",
+          -- Keymap to save the current chat manually (when auto_save is disabled)
+          save_chat_keymap = "sc",
+          -- Save all chats by default (disable to save only manually using 'sc')
+          auto_save = true,
+          -- Number of days after which chats are automatically deleted (0 to disable)
+          expiration_days = 0,
+          -- Picker interface (auto resolved to a valid picker)
+          picker = "telescope", --- ("telescope", "snacks", "fzf-lua", or "default")
+          ---Optional filter function to control which chats are shown when browsing
+          chat_filter = nil, -- function(chat_data) return boolean end
+          -- Customize picker keymaps (optional)
+          picker_keymaps = {
+            rename = { n = "r", i = "<M-r>" },
+            delete = { n = "d", i = "<M-d>" },
+            duplicate = { n = "<C-y>", i = "<C-y>" },
+          },
+          ---Automatically generate titles for new chats
+          auto_generate_title = true,
+          title_generation_opts = {
+            ---Adapter for generating titles (defaults to current chat adapter)
+            adapter = nil, -- "copilot"
+            ---Model for generating titles (defaults to current chat model)
+            model = nil, -- "gpt-4o"
+            ---Number of user prompts after which to refresh the title (0 to disable)
+            refresh_every_n_prompts = 0, -- e.g., 3 to refresh after every 3rd user prompt
+            ---Maximum number of times to refresh the title (default: 3)
+            max_refreshes = 3,
+            format_title = function(original_title)
+              -- this can be a custom function that applies some custom
+              -- formatting to the title.
+              return original_title
+            end,
+          },
+          ---On exiting and entering neovim, loads the last chat on opening chat
+          continue_last_chat = false,
+          ---When chat is cleared with `gx` delete the chat from history
+          delete_on_clearing_chat = false,
+          ---Directory path to save the chats
+          dir_to_save = vim.fn.stdpath("data") .. "/codecompanion-history",
+          ---Enable detailed logging for history extension
+          enable_logging = false,
+
+          -- Summary system
+          summary = {
+            -- Keymap to generate summary for current chat (default: "gcs")
+            create_summary_keymap = "gcs",
+            -- Keymap to browse summaries (default: "gbs")
+            browse_summaries_keymap = "gbs",
+
+            generation_opts = {
+              adapter = nil, -- defaults to current chat adapter
+              model = nil, -- defaults to current chat model
+              context_size = 90000, -- max tokens that the model supports
+              include_references = true, -- include slash command content
+              include_tool_outputs = true, -- include tool execution results
+              system_prompt = nil, -- custom system prompt (string or function)
+              format_summary = nil, -- custom function to format generated summary e.g to remove <think/> tags from summary
+            },
+          },
+
+          -- Memory system (requires VectorCode CLI)
+          memory = {
+            -- Automatically index summaries when they are generated
+            auto_create_memories_on_summary_generation = true,
+            -- Path to the VectorCode executable
+            vectorcode_exe = "vectorcode",
+            -- Tool configuration
+            tool_opts = {
+              -- Default number of memories to retrieve
+              default_num = 10,
+            },
+            -- Enable notifications for indexing progress
+            notify = true,
+            -- Index all existing memories on startup
+            -- (requires VectorCode 0.6.12+ for efficient incremental indexing)
+            index_on_startup = false,
+          },
+        },
+      },
     },
   },
 }

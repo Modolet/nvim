@@ -18,16 +18,17 @@ vim.keymap.set({ "n", "v" }, "<C-a>", "<cmd>CodeCompanionActions<cr>", { noremap
 vim.keymap.set({ "n", "v" }, "<LocalLeader>a", "<cmd>CodeCompanionChat Toggle<cr>", { noremap = true, silent = true })
 vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { noremap = true, silent = true })
 
-map("n", "<c-.>", function()
-  Snacks.terminal.open(nil, { cwd = LazyVim.root(), win = { position = "float" } })
+map({ "n", "t" }, "<m-.>", function()
+  Snacks.terminal.toggle("nu", { cwd = LazyVim.root(), win = { position = "float" }, env = { position = "float" } })
 end, { desc = "Float Terminal (Root Dir)" })
 
-map("n", "<c->>", function()
-  Snacks.terminal.open(nil, { nil, win = { position = "float" } })
-end, { desc = "Float Terminal (cwd)" })
+map({ "n", "t" }, "<m-/>", function()
+  Snacks.terminal.toggle("nu", { cwd = LazyVim.root(), win = { position = "bottom" }, env = { position = "bottom" } })
+  -- Snacks.terminal.open({ cwd = LazyVim.root(), win = { position = "bottom" } })
+end, { desc = "Float Terminal (Root Dir)" })
 
-map("t", "<C-.>", "<cmd>close<cr>", { desc = "Hide Terminal" })
-map("t", "<C->>", "<cmd>close<cr>", { desc = "Hide Terminal" })
+-- map("t", "<m-.>", "<cmd>hide<cr>", { desc = "Hide Terminal" })
+-- map("t", "<m-/>", "<cmd>hide<cr>", { desc = "Hide Terminal" })
 
 -- Expand 'cc' into 'CodeCompanion' in the command line
 vim.cmd([[cab cc CodeCompanion]])
